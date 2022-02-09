@@ -33,8 +33,25 @@
         </div>
         <div id="unlocked">
             <h3>Binary and Hexadecimal</h3>
+            <p id="totalAttempts"></p>
             <p>Well done you did it!</p>
-            <p>Programmers prefer to use hexadecimal as it has far less digits. This makes it faster to type in, and reduces the chance of error.</p>
+            <p>The first lock required a string of 8 bits to unlock. The second lock required 2 hexadecimal digits. These representations of data are equal, 8 bits can be shortened into 2 hexadecimal digits. Because of this reason, programmers prefer to use hexadecimal. Fewer digits makes it faster to input, and reduces the chance of error.</p>
+            <p>The technique that you used to get past the lock is called a <b>brute-force</b> attack. In this attack you try every possible combination of an answer until you find the right one.</p>
+            <p>Doing this manually is slow and as the password grows in length, it will soon become so impractical it would be deemed basically impossible. However, a computer programmer could write some code to automate the brute-force attack, which would significantly speed it up.</p>
+            <p>The code below does this for the BinHex lock that you just manually brute-forced.</p>
+            <pre><code>
+            while(binaryValues.length != 0) {
+                console.log(binaryValues[0]);
+                checkAnswerBinary(binaryValues[0]);
+                await new Promise(r => setTimeout(r, 100));
+            }
+            while(hexValues.length != 0) {
+                console.log(hexValues[0]);
+                checkAnswerHex(hexValues[0]);
+                await new Promise(r => setTimeout(r, 100));
+            }
+            </code></pre>
+            <p>You can run this code in the console tab on the BinHex page before you manually brute force it. You can access the console tab using the <code>f12</code> key.</p>
         </div>
         <script src="unlock.js"></script>
     </body>

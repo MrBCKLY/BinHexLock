@@ -84,11 +84,18 @@ function update() {
 
 function checkAnswerBinary(x) {
     binaryLock = document.getElementById("binaryLock");
-    if(x === binaryAnswer) {
+    if(x === binaryAnswer && binaryAttempts > 50) {
         binaryLock.disabled = true;
         binaryLock.value = "Success!";
         currentLock = "hex";
         binaryValues = [];
+    }
+    else if(x === binaryAnswer) {
+        console.log("You haven't worked hard enough yet.")
+        if(binaryValues.includes(x)) {
+            binaryValues.splice(binaryValues.indexOf(x), 1);
+        }
+        binaryAnswer = binaryValues[Math.floor(Math.random() * binaryValues.length)];
     }
     else {
         if(binaryValues.includes(x)) {
@@ -103,29 +110,25 @@ function checkAnswerBinary(x) {
 
 binaryLock.onkeydown = function(event) {
     if (event.keyCode == 13) {
-        if(binaryLock.value === binaryAnswer) {
-            binaryLock.disabled = true;
-            binaryLock.value = "Success!";
-            currentLock = "hex";
-        }
-        else {
-            if(binaryValues.includes(binaryLock.value)) {
-                binaryValues.splice(binaryValues.indexOf(binaryLock.value), 1);
-            }
-        }
-        binaryLock.value = "";
-        binaryAttempts = binaryAttempts + 1;
-        binaryLog.innerHTML = "Attempts: " + binaryAttempts;
+        checkAnswerBinary(binaryLock.value);
     }
     update();
 }
 
 function checkAnswerHex(x) {
     hexLock = document.getElementById("hexLock");
-    if(x === hexAnswer) {
+    if(x === hexAnswer && hexAttempts > 50) {
         hexValues = [];
         document.getElementById("unlocking").style.display = "none";
         document.getElementById("unlocked").style.display = "block";
+        document.getElementById("totalAttempts").innerHTML = "Total Attempts: " + (binaryAttempts + hexAttempts);
+    }
+    else if(x === hexAnswer) {
+        console.log("You haven't worked hard enough yet.")
+        if(hexValues.includes(x)) {
+            hexValues.splice(hexValues.indexOf(x), 1);
+        }
+        hexAnswer = hexValues[Math.floor(Math.random() * hexValues.length)];
     }
     else {
         if(hexValues.includes(x)) {
@@ -140,19 +143,7 @@ function checkAnswerHex(x) {
 
 hexLock.onkeydown = function(event) {
     if (event.keyCode == 13) {
-        if(hexLock.value.toString() === hexAnswer) {
-            console.log("hhhhhhh");
-            document.getElementById("unlocking").style.display = "none";
-            document.getElementById("unlocked").style.display = "block";
-        }
-        else {
-            if(hexValues.includes(hexLock.value)) {
-                hexValues.splice(hexValues.indexOf(hexLock.value), 1);
-            }
-        }
-        hexLock.value = "";
-        hexAttempts = hexAttempts + 1;
-        hexLog.innerHTML = "Attempts: " + hexAttempts;
+        checkAnswerHex(hexLock.value);
     }
     update();
 }
